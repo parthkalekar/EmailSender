@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 const corsOptions = {
-  origin: "https://my-portfolio-rosy-seven-45.vercel.app/",
+  origin: "https://my-portfolio-rosy-seven-45.vercel.app",
 };
 
 app.use(cors(corsOptions));
