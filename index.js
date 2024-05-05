@@ -7,7 +7,8 @@ const cors = require("cors");
 
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("Hello World!"));
+// app.get("/", (req, res) => res.send("Hello World!"));
+// app.use(cors())
 const corsOptions = {
   origin: "https://my-portfolio-rosy-seven-45.vercel.app",
 };
@@ -17,6 +18,7 @@ app.use(cors(corsOptions));
 app.post("/contactme", async (req, res) => {
   try {
     const { name, email, website, description } = req.body;
+    console.log("REQ => ", req.headers);
     if (!(name && email && description)) {
       return res
         .status(406)
