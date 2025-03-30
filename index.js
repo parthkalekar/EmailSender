@@ -9,8 +9,22 @@ app.use(express.json());
 
 // app.get("/", (req, res) => res.send("Hello World!"));
 // app.use(cors())
+// const corsOptions = {
+//   origin: "https://my-portfolio-rosy-seven-45.vercel.app",
+// };
+const allowedOrigins = ["https://my-portfolio-rosy-seven-45.vercel.app"];
+
 const corsOptions = {
-  origin: "https://my-portfolio-rosy-seven-45.vercel.app",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Important to allow sending cookies
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie"], // Include Cookie header to allow cookie exchange
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 };
 
 app.use(cors(corsOptions));
