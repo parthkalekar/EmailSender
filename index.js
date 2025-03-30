@@ -18,7 +18,7 @@ app.use(cors(corsOptions));
 app.post("/contactme", async (req, res) => {
   try {
     const { name, email, website, description } = req.body;
-    console.log("REQ => ", req.headers);
+    // console.log("REQ => ", req.headers);
     if (!(name && email && description)) {
       return res
         .status(406)
@@ -27,13 +27,13 @@ app.post("/contactme", async (req, res) => {
 
     // const isMailSended = await emailSender(name,email,website,description, req.ip);
     // console.log(isMailSended);
-
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress
     const isMailSended = await emailSender(
       name,
       email,
       website,
       description,
-      req.ip
+      ip
     );
     if (!isMailSended) {
       return res
@@ -53,5 +53,12 @@ app.post("/contactme", async (req, res) => {
       });
   }
 });
+
+// app.get('/h', (req,res) => {
+//   return res.status(200).send("Hello World !");
+// })
+// app.get('/hh', (req,res) => {
+//   return res.status(200).send("Hello World 12232424 !");
+// })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
