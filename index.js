@@ -12,7 +12,7 @@ app.use(express.json());
 // const corsOptions = {
 //   origin: "https://my-portfolio-rosy-seven-45.vercel.app",
 // };
-const allowedOrigins = ["https://my-portfolio-rosy-seven-45.vercel.app"];
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",") 
 
 const corsOptions = {
   origin: function (origin, callback) {
