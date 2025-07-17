@@ -40,5 +40,30 @@ const emailSender = async (name, email, website, description, ipaddress) => {
     return false;
   }
 };
+const mailSender = async (from, toEmail, subject, template) => {
+  try {
+    let transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: true,
+      auth: {
+        user: process.env.AUTH_USER,
+        pass: process.env.AUTH_PASS,
+      },
+    });
 
-module.exports = { emailSender };
+    let details = {
+      from: `${from}`,
+      to: `${toEmail}`,
+      subject: `${subject}`,
+      // text: `${message}`,
+      html: template,
+    };
+
+    const isSended = await transporter.sendMail(details);
+    return isSended
+  } catch (error) {
+    return false;
+  }
+};
+module.exports = { emailSender, mailSender};
