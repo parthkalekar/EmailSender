@@ -71,7 +71,12 @@ app.post("/contactme", async (req, res) => {
 app.post('/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
-
+    if(!(name && email && message)){
+      return res
+        .status(406)
+        .json({ result: false, message: "All Data Required...!" });
+    }
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress
     const myTemplate = `<html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -171,7 +176,7 @@ app.post('/contact', async (req, res) => {
 
       <div class="field">
         <div class="label">IP Address</div>
-        <div class="value">${req.ip || "Anonymous"}</div>
+        <div class="value">${ip || "Anonymous"}</div>
       </div>
 
       <div class="footer">
